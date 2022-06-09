@@ -1,0 +1,208 @@
+html {
+  background-color: #ff9a8b;
+  background-image: linear-gradient(
+    90deg,
+    #ff9a8b 0%,
+    #ff6a88 55%,
+    #ff99ac 100%
+  );
+}
+
+#root {
+  background-color: #ff9a8b;
+  background-image: linear-gradient(
+    90deg,
+    #ff9a8b 0%,
+    #ff6a88 55%,
+    #ff99ac 100%
+  );
+}
+
+@keyframes typing {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+
+.container {
+  position: relative;
+  font-family: Nunito, monospace;
+}
+
+.typing {
+  /* position: absolute; */
+  top: 0;
+  margin: 0;
+  z-index: -1;
+}
+
+.hiders {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.hiders p {
+  position: relative;
+  clear: both;
+  margin: 0;
+  float: right; /* makes animation go left-to-right */
+  width: 0; /* graceful degradation: if animation doesn't work, these are invisible by default */
+  background: white; /* same as page background */
+  animation: typing 2s steps(30, end);
+  animation-fill-mode: both; /* load first keyframe on page load, leave on last frame at end */
+}
+
+.hiders p:nth-child(2) {
+  animation-delay: 2s;
+}
+.hiders p:nth-child(3) {
+  animation-delay: 4s;
+}
+.hiders p:nth-child(4) {
+  animation-delay: 6s;
+}
+.hiders p:nth-child(5) {
+  animation-delay: 8s;
+}
+.hiders p:nth-child(6) {
+  animation-delay: 10s;
+}
+.hiders p:nth-child(7) {
+  animation-delay: 12s;
+}
+.hiders p:nth-child(8) {
+  animation-delay: 14s;
+}
+.hiders p:nth-child(9) {
+  animation-delay: 16s;
+}
+.hiders p:nth-child(10) {
+  animation-delay: 18s;
+}
+.hiders p:nth-child(11) {
+  animation-delay: 20s;
+}
+.hiders p:nth-child(12) {
+  animation-delay: 22s;
+}
+.hiders p:nth-child(13) {
+  animation-delay: 24s;
+}
+.hiders p:nth-child(14) {
+  animation-delay: 26s;
+}
+.hiders p:nth-child(15) {
+  animation-delay: 28s;
+}
+.hiders p:nth-child(16) {
+  animation-delay: 30s;
+}
+.hiders p:nth-child(17) {
+  animation-delay: 32s;
+}
+.hiders p:nth-child(18) {
+  animation-delay: 34s;
+}
+.hiders p:nth-child(19) {
+  animation-delay: 36s;
+}
+.hiders p:nth-child(20) {
+  animation-delay: 38s;
+}
+.hiders p:nth-child(21) {
+  animation-delay: 40s;
+}
+.hiders p:nth-child(22) {
+  animation-delay: 42s;
+}
+.hiders p:nth-child(23) {
+  animation-delay: 44s;
+}
+.hiders p:nth-child(24) {
+  animation-delay: 46s;
+}
+.hiders p:nth-child(25) {
+  animation-delay: 48s;
+}
+.hiders p:nth-child(26) {
+  animation-delay: 50s;
+}
+.hiders p:nth-child(27) {
+  animation-delay: 52s;
+}
+.hiders p:nth-child(28) {
+  animation-delay: 54s;
+}
+.hiders p:nth-child(29) {
+  animation-delay: 56s;
+}
+.hiders p:nth-child(30) {
+  animation-delay: 58s;
+}
+.hiders p:nth-child(31) {
+  animation-delay: 60s;
+}
+.hiders p:nth-child(32) {
+  animation-delay: 62s;
+}
+.hiders p:nth-child(33) {
+  animation-delay: 64s;
+}
+.hiders p:nth-child(34) {
+  animation-delay: 66s;
+}
+.hiders p:nth-child(35) {
+  animation-delay: 68s;
+}
+.hiders p:nth-child(36) {
+  animation-delay: 70s;
+}
+.hiders p:nth-child(37) {
+  animation-delay: 72s;
+}
+.hiders p:nth-child(38) {
+  animation-delay: 74s;
+}
+.hiders p:nth-child(39) {
+  animation-delay: 76s;
+}
+.hiders p:nth-child(40) {
+  animation-delay: 78s;
+}
+.hiders p:nth-child(41) {
+  animation-delay: 80s;
+}
+
+.triangulo-direito {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 200px 0 0 200px;
+  border-color: transparent transparent transparent #fcb7b7a1;
+}
+.triangulo-esquerdo {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 200px 200px;
+  border-color: transparent transparent #fcb7b7a1 transparent;
+}
+.triangulo-centro {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 199px 200px 0 200px;
+  border-color: #fcb7b7 transparent transparent transparent;
+}
+.triangulo-centro2 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 200px 200px 0 200px;
+  border-color: #1c1c1c47 transparent transparent transparent;
+}
