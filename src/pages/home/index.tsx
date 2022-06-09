@@ -254,6 +254,25 @@ export default function Home() {
               </p>
 
               <div className={openLetter ? "hiders" : ""}>
+                {(function () {
+                  let paragraphs = [];
+                  let count = 0;
+                  for (let i = 0; i < 100; i++) {
+                    count;
+                    paragraphs.push(
+                      <p
+                        style={{
+                          animationDelay: `${i * 2}s`,
+                          // background: "blue",
+                        }}
+                      >
+                        &nbsp;
+                      </p>
+                    );
+                  }
+                  return paragraphs;
+                })()}
+                {/* <p>&nbsp;</p>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
@@ -292,8 +311,7 @@ export default function Home() {
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
+                <p>&nbsp;</p> */}
               </div>
             </div>
           </DialogContentText>
