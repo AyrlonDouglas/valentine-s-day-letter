@@ -34,7 +34,7 @@ const scaleMaior = keyframes`
     transform: scale(1);
 
 } 50%{
-    transform: scale(1.3);
+    transform: scale(1.1);
 
 } 100%{
     transform: scale(1);
@@ -222,7 +222,10 @@ export default function Home() {
             sx={{ color: "rgba(0,0,0,0.8)" }}
           >
             <div className="container">
-              <p className={openLetter ? "typing" : ""}>
+              <p
+                className={openLetter ? "typing" : ""}
+                style={{ textAlign: "justify" }}
+              >
                 Oi amor, tudo bem ? Primeiramente, tenho que adiantar que sou
                 péssimo com palavras (apesar de você já saber disso), sobretudo
                 quando estou falando sobre sentimento, que é um pouco do que eu
