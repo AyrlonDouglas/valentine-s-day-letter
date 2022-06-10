@@ -6,6 +6,7 @@ html {
     #ff6a88 55%,
     #ff99ac 100%
   );
+  scroll-behavior: smooth;
 }
 
 #root {
