@@ -61,7 +61,7 @@ const keyframesB = keyframes`
 `;
 const cards: string[] = [];
 for (let i = 1; i <= 13; i++) {
-  cards.push(`../../../public/casal/${i}.jpeg`);
+  cards.push(`../../../casal/${i}.jpeg`);
 }
 console.log(cards);
 export default function Home() {
