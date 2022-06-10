@@ -30,7 +30,7 @@ import VolumeUp from "@mui/icons-material/VolumeUp";
 import styles from "./styles.module.css";
 import "./stylesCSS.css";
 import theme from "../../theme/theme";
-
+// import figura from "../../../public/casal/";
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -61,7 +61,7 @@ const keyframesB = keyframes`
 `;
 const cards: string[] = [];
 for (let i = 1; i <= 13; i++) {
-  cards.push(`src/assets/images/casal/${i}.jpeg`);
+  cards.push(`../../../public/casal/${i}.jpeg`);
 }
 console.log(cards);
 export default function Home() {
