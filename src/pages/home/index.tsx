@@ -32,6 +32,7 @@ import VolumeUp from "@mui/icons-material/VolumeUp";
 import styles from "./styles.module.css";
 import "./stylesCSS.css";
 import theme from "../../theme/theme";
+import moment from "moment";
 // import figura from "../../../public/casal/";
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -73,6 +74,7 @@ export default function Home() {
   const [valueVolume, setValueVolume] = React.useState<number>(70);
   let audio = new Audio(musicaOTERNO);
   const size600 = useMediaQuery("(min-width:600px)");
+
   const to = (i: number) => ({
     x: 0,
     y: i * -4,
@@ -156,7 +158,6 @@ export default function Home() {
     setOpenLetter(false);
     setHasCloseLetter(true);
   };
-
   return (
     <>
       <Container
@@ -317,9 +318,9 @@ export default function Home() {
                 <Deck />
                 <Typography
                   fontWeight={700}
-                  sx={{ position: "absolute", top: "600px", color: "white" }}
+                  sx={{ position: "absolute", top: "700px", color: "white" }}
                 >
-                  Em breve novas atualizações ;)
+                  Em breve a gente atualiza essas fotos!
                 </Typography>
               </Grid>
             </>
@@ -349,7 +350,7 @@ export default function Home() {
             <div className="container">
               <p
                 className={openLetter ? "typing" : ""}
-                style={{ textAlign: "justify" }}
+                // style={{ textAlign: "justify" }}
               >
                 Oi amor, tudo bem ? Primeiramente, tenho que adiantar que sou
                 péssimo com palavras (apesar de você já saber disso), sobretudo
