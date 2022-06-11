@@ -13,7 +13,9 @@ import {
   DialogTitle,
   Button,
   Box,
+  useMediaQuery,
 } from "@mui/material";
+import HeadphonesIcon from "@mui/icons-material/Headphones";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { TransitionProps } from "@mui/material/transitions";
 import { keyframes } from "@mui/system";
@@ -63,7 +65,6 @@ const cards: string[] = [];
 for (let i = 1; i <= 13; i++) {
   cards.push(`../../../casal/${i}.jpeg`);
 }
-console.log(cards);
 export default function Home() {
   const [hasCartOpen, setHasCartOpen] = useState(false);
   const [hasMusicPlay, setHasMusicPlay] = useState(false);
@@ -71,11 +72,7 @@ export default function Home() {
   const [hasCloseLetter, setHasCloseLetter] = useState(false);
   const [valueVolume, setValueVolume] = React.useState<number>(70);
   let audio = new Audio(musicaOTERNO);
-
-  const handleChangeVolume = (event: Event, newValue: number | number[]) => {
-    setValueVolume(newValue as number);
-    audio.volume = parseFloat(((newValue as number) / 100).toFixed(1));
-  };
+  const size600 = useMediaQuery("(min-width:600px)");
   const to = (i: number) => ({
     x: 0,
     y: i * -4,
@@ -167,32 +164,8 @@ export default function Home() {
           height: "100vh",
         }}
       >
-        <Box sx={{ position: "fixed", bottom: 0, width: "100px" }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <IconButton onClick={() => audio.play()}>
-              <PlayArrowIcon sx={{ color: "black" }} />
-            </IconButton>
-            <IconButton onClick={() => audio.pause()}>
-              <PauseIcon sx={{ color: "black" }} />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                audio.currentTime = 0;
-                audio.pause();
-              }}
-            >
-              <StopIcon sx={{ color: "black" }} />
-            </IconButton>
-          </Box>
-        </Box>
         <Typography
-          variant="h1"
+          variant={size600 ? "h1" : "h3"}
           align="center"
           mt={2}
           fontWeight={700}
@@ -204,12 +177,12 @@ export default function Home() {
           container
           justifyContent={"center"}
           alignItems="center"
-          height={"70%"}
+          height={size600 ? "70%" : "40%"}
         >
           {!hasCloseLetter ? (
             <>
               <Grid item>
-                <Typography variant="h4" align="center">
+                <Typography variant={size600 ? "h4" : "h5"} align="center">
                   Chegou uma mensagem para você!
                 </Typography>
               </Grid>
@@ -221,6 +194,7 @@ export default function Home() {
                 lg={8}
                 xl={8}
                 sx={{
+                  width: "100px",
                   display: "flex",
                   justifyContent: "center",
                   margin: "5rem 0",
@@ -231,8 +205,8 @@ export default function Home() {
               >
                 <IconButton
                   sx={{
-                    width: "400px",
-                    height: "200px",
+                    width: size600 ? "400px" : "200px",
+                    height: size600 ? "200px" : "100px",
                     borderRadius: "1rem",
                     zIndex: 1200,
                   }}
@@ -251,9 +225,11 @@ export default function Home() {
                     sx={{
                       // position: "relative",
                       ".MuiBadge-badge": {
-                        transform: "scale(3) translate(50%, -50%)",
-                        top: "-10px",
-                        right: "-100px",
+                        transform: `scale(${
+                          size600 ? 3 : 2
+                        }) translate(50%, -50%)`,
+                        // top: 0,
+                        right: size600 ? "-100px" : "-50px",
                       },
                     }}
                   >
@@ -261,8 +237,8 @@ export default function Home() {
                       sx={{
                         position: "relative",
                         // background: "black",
-                        width: "200px",
-                        height: "200px",
+                        width: size600 ? "200px" : "100px",
+                        height: size600 ? "200px" : "100px",
                         display: "flex",
                         // justifyContent: "center",
                         alignItems: "center",
@@ -270,29 +246,42 @@ export default function Home() {
                     >
                       <Box
                         className="triangulo-direito"
-                        sx={{ position: "absolute", right: "100px" }}
+                        sx={{
+                          position: "absolute",
+                          right: size600 ? "100px" : "45px",
+                        }}
                       ></Box>
                       <Box
                         className="triangulo-centro2"
-                        sx={{ position: "absolute", right: "-100px" }}
+                        sx={{
+                          position: "absolute",
+                          right: size600 ? "-100px" : "-55px",
+                        }}
                       ></Box>
                       <Box
                         className="triangulo-centro"
-                        sx={{ position: "absolute", right: "-100px", top: 0 }}
+                        sx={{
+                          position: "absolute",
+                          right: size600 ? "-100px" : "-55px",
+                          top: 0,
+                        }}
                       ></Box>
 
                       <Box
                         className="triangulo-esquerdo"
-                        sx={{ position: "absolute", left: "100px" }}
+                        sx={{
+                          position: "absolute",
+                          left: size600 ? "100px" : "55px",
+                        }}
                       ></Box>
                       <FavoriteIcon
                         color="primary"
                         sx={{
                           position: "absolute",
                           zIndex: 50,
-                          width: "10rem",
-                          height: "10rem",
-                          right: "20px",
+                          width: size600 ? "10rem" : "5rem",
+                          height: size600 ? "10rem" : "5rem",
+                          right: size600 ? "20px" : "5px",
                         }}
                       />
                     </Box>
@@ -372,7 +361,7 @@ export default function Home() {
                 engraçado como o racional se torna ínfimo quando o coração bate
                 mais forte por amar com alguém. Eu gosto muito de acreditar no
                 determinismo, ou seja, que tudo que acontece já foi determinado
-                lá no passado. Acredito que nos conhecermos por um propósito,
+                lá no passado. Acredito que nos conhecermos tem um propósito,
                 que nossa conexão instantânea tem um porquê claro, e que em um
                 futuro talvez descubramos essas respostas, mas te digo, os
                 porquês nada importam, o que de fato é relevante nessa vida é
@@ -380,16 +369,16 @@ export default function Home() {
                 pensar em ti. Sem dúvidas você é uma das pessoas mais especiais
                 que já tive em minha vida, e sou eternamente grato por poder
                 compartilhar um pouco da minha vida com você. Lembro do nosso
-                primeiro encontro naquele bar, do seu olhar penetrante a me
-                olhar e eu sem jeito e sem saber muito bem o que fazer, mas
-                sabia que eu precisava falar contigo. "Seria muita pretensão
-                minha te chamar para dançar?" foi minha primeira frase dirigida
-                a você, e em seguida a retórica positiva, mas sorte a minha! E
-                dai se inicia uma história a mais nas nossas vidas, e que a
-                partir de então, desejo que todas as próximas histórias vocês
-                também esteja inclusa. Parafraseando Carl Sagan, Dada a Vastidão
-                do espaço e na imensidão do tempo, é uma alegria poder
-                compartilhar um planeta e um época com você Welma. <br />
+                primeiro encontro naquele bar, do seu olhar penetrante e eu sem
+                jeito e sem saber muito bem o que fazer, mas sabia que eu
+                precisava falar contigo. "Seria muita pretensão minha te chamar
+                para dançar?" foi minha primeira frase dirigida a você, e em
+                seguida veio a retórica positiva, mas sorte a minha! E dai se
+                inicia uma história a mais nas nossas vidas, e que a partir de
+                então, desejo que todas as próximas histórias vocês também
+                esteja inclusa. Parafraseando Carl Sagan, Dada a Vastidão do
+                espaço e na imensidão do tempo, é uma alegria poder compartilhar
+                um planeta e um época com você Welma. <br />
                 <span
                   style={{
                     color: theme.palette.primary.main,
@@ -426,7 +415,7 @@ export default function Home() {
         <DialogActions sx={{ margin: "0 auto" }}>
           <Button onClick={handleClose} variant="contained">
             <Typography textTransform={"capitalize"}>
-              Leu tudinho? Clica em mim!
+              Leu tudinho? Então Clica aqui
             </Typography>
           </Button>
           {/* <Button onClick={handleClose}>Agree</Button> */}

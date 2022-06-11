@@ -57,7 +57,9 @@ html {
   animation: typing 2s steps(30, end);
   animation-fill-mode: both; /* load first keyframe on page load, leave on last frame at end */
 }
-
+/*
+ #fcb7b7a1
+*/
 .triangulo-direito {
   width: 0;
   height: 0;
@@ -85,4 +87,19 @@ html {
   border-style: solid;
   border-width: 200px 200px 0 200px;
   border-color: #1c1c1c47 transparent transparent transparent;
+}
+
+@media (max-width: 600px) {
+  .triangulo-direito {
+    border-width: 100px 0 0 100px;
+  }
+  .triangulo-esquerdo {
+    border-width: 0 0 100px 100px;
+  }
+  .triangulo-centro {
+    border-width: 99px 100px 0 100px;
+  }
+  .triangulo-centro2 {
+    border-width: 100px 100px 0 100px;
+  }
 }
