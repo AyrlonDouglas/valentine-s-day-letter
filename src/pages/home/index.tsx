@@ -127,7 +127,7 @@ export default function Home() {
           setTimeout(() => {
             gone.clear();
             api.start((i) => to(i));
-          }, 600);
+          }, 2000);
       }
     );
     // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
