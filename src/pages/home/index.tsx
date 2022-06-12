@@ -104,8 +104,7 @@ export default function Home() {
             <>
               <Grid item>
                 <Typography variant="h4" align="center" margin={8}>
-                  Uma pequena amostra do nosso tempo juntos, espero atualizá-las
-                  em breve.
+                  Uma pequena amostra do nosso tempo juntos
                 </Typography>
               </Grid>
 
