@@ -1,48 +1,30 @@
 import React, { useState, useEffect } from "react";
+// Mui
 import {
   Typography,
   Container,
   Grid,
   Badge,
   IconButton,
-  Slide,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
   Box,
   useMediaQuery,
 } from "@mui/material";
-import HeadphonesIcon from "@mui/icons-material/Headphones";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { TransitionProps } from "@mui/material/transitions";
 import { keyframes } from "@mui/system";
-import valentineCart from "../../assets/images/valentineCART.png";
-import musicaOTERNO from "../../assets/musics/OTerno-Volta.mp3";
-import { useSprings, animated, to as interpolate } from "@react-spring/web";
-import { useDrag } from "@use-gesture/react";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PauseIcon from "@mui/icons-material/Pause";
-import StopIcon from "@mui/icons-material/Stop";
-import Slider from "@mui/material/Slider";
-import VolumeDown from "@mui/icons-material/VolumeDown";
-import VolumeUp from "@mui/icons-material/VolumeUp";
-import styles from "./styles.module.css";
-import "./stylesCSS.css";
-import theme from "../../theme/theme";
-import moment from "moment";
-// import figura from "../../../public/casal/";
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
+//Icons
+import FavoriteIcon from "@mui/icons-material/Favorite";
+// Styles
+import "./stylesCSS.css";
+
+// Data
+import musicaOTERNO from "../../assets/musics/OTerno-Volta.mp3";
+import theme from "../../theme/theme";
+
+// Componentes
+import DialogLetter from "../../components/Dialog/Letter";
+import Deck from "../../components/Deck";
+import Letter from "../../components/Letter";
 const scaleMaior = keyframes`
 0%{
     transform: scale(1);
@@ -56,12 +38,6 @@ const scaleMaior = keyframes`
 }
 `;
 
-const keyFramesT = keyframes`
-  from {background-size:0 200%}
-`;
-const keyframesB = keyframes`
- 50% {background-position:0 -100%,0 0}
-`;
 const cards: string[] = [];
 for (let i = 1; i <= 13; i++) {
   cards.push(`../../../casal/${i}.jpeg`);
@@ -75,80 +51,6 @@ export default function Home() {
   let audio = new Audio(musicaOTERNO);
   const size600 = useMediaQuery("(min-width:600px)");
 
-  const to = (i: number) => ({
-    x: 0,
-    y: i * -4,
-    scale: 1,
-    rot: -10 + Math.random() * 20,
-    delay: i * 100,
-  });
-  const from = (_i: number) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 });
-  // This is being used down there in the view, it interpolates rotation and scale into a css transform
-  const trans = (r: number, s: number) =>
-    `perspective(1500px) rotateX(30deg) rotateY(${
-      r / 10
-    }deg) rotateZ(${r}deg) scale(${s})`;
-
-  function Deck() {
-    const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
-    const [props, api] = useSprings(cards.length, (i) => ({
-      ...to(i),
-      from: from(i),
-    })); // Create a bunch of springs using the helpers above
-    // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
-    const bind = useDrag(
-      ({
-        args: [index],
-        active,
-        movement: [mx],
-        direction: [xDir],
-        velocity: [vx],
-      }) => {
-        const trigger = vx > 0.2; // If you flick hard enough it should trigger the card to fly out
-        if (!active && trigger) gone.add(index); // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
-        api.start((i) => {
-          if (index !== i) return; // We're only interested in changing spring-data for the current spring
-          const isGone = gone.has(index);
-          const x = isGone ? (200 + window.innerWidth) * xDir : active ? mx : 0; // When a card is gone it flys out left or right, otherwise goes back to zero
-          const rot = mx / 100 + (isGone ? xDir * 10 * vx : 0); // How much the card tilts, flicking it harder makes it rotate faster
-          const scale = active ? 1.1 : 1; // Active cards lift up a bit
-          return {
-            x,
-            rot,
-            scale,
-            delay: undefined,
-            config: {
-              friction: 50,
-              tension: active ? 800 : isGone ? 200 : 500,
-            },
-          };
-        });
-        if (!active && gone.size === cards.length)
-          setTimeout(() => {
-            gone.clear();
-            api.start((i) => to(i));
-          }, 2000);
-      }
-    );
-    // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
-    return (
-      <>
-        {props.map(({ x, y, rot, scale }, i) => (
-          <animated.div className={styles.deck} key={i} style={{ x, y }}>
-            {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
-            <animated.div
-              {...bind(i)}
-              style={{
-                transform: interpolate([rot, scale], trans),
-                backgroundImage: `url(${cards[i]})`,
-              }}
-            />
-          </animated.div>
-        ))}
-      </>
-    );
-  }
-
   const handleClickOpen = () => {
     setOpenLetter(true);
     setHasCloseLetter(false);
@@ -157,6 +59,15 @@ export default function Home() {
   const handleClose = () => {
     setOpenLetter(false);
     setHasCloseLetter(true);
+  };
+
+  const handleClickLetter = (): void => {
+    handleClickOpen();
+    setHasCartOpen(true);
+    if (!hasMusicPlay) {
+      setHasMusicPlay(true);
+      audio.play();
+    }
   };
   return (
     <>
@@ -187,108 +98,7 @@ export default function Home() {
                   Chegou uma mensagem para você!
                 </Typography>
               </Grid>
-              <Grid
-                item
-                xs={8}
-                sm={8}
-                md={8}
-                lg={8}
-                xl={8}
-                sx={{
-                  width: "100px",
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "5rem 0",
-                  animation: `${
-                    !hasCartOpen ? `${scaleMaior} 1s infinite ease` : ""
-                  }`,
-                }}
-              >
-                <IconButton
-                  sx={{
-                    width: size600 ? "400px" : "200px",
-                    height: size600 ? "200px" : "100px",
-                    borderRadius: "1rem",
-                    zIndex: 1200,
-                  }}
-                  onClick={() => {
-                    handleClickOpen();
-                    setHasCartOpen(true);
-                    if (!hasMusicPlay) {
-                      setHasMusicPlay(true);
-                      audio.play();
-                    }
-                  }}
-                >
-                  <Badge
-                    badgeContent={hasCartOpen ? 0 : 1}
-                    color="primary"
-                    sx={{
-                      // position: "relative",
-                      ".MuiBadge-badge": {
-                        transform: `scale(${
-                          size600 ? 3 : 2
-                        }) translate(50%, -50%)`,
-                        // top: 0,
-                        right: size600 ? "-100px" : "-50px",
-                      },
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        position: "relative",
-                        // background: "black",
-                        width: size600 ? "200px" : "100px",
-                        height: size600 ? "200px" : "100px",
-                        display: "flex",
-                        // justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        className="triangulo-direito"
-                        sx={{
-                          position: "absolute",
-                          right: size600 ? "100px" : "45px",
-                        }}
-                      ></Box>
-                      <Box
-                        className="triangulo-centro2"
-                        sx={{
-                          position: "absolute",
-                          right: size600 ? "-100px" : "-55px",
-                        }}
-                      ></Box>
-                      <Box
-                        className="triangulo-centro"
-                        sx={{
-                          position: "absolute",
-                          right: size600 ? "-100px" : "-55px",
-                          top: 0,
-                        }}
-                      ></Box>
-
-                      <Box
-                        className="triangulo-esquerdo"
-                        sx={{
-                          position: "absolute",
-                          left: size600 ? "100px" : "55px",
-                        }}
-                      ></Box>
-                      <FavoriteIcon
-                        color="primary"
-                        sx={{
-                          position: "absolute",
-                          zIndex: 50,
-                          width: size600 ? "10rem" : "5rem",
-                          height: size600 ? "10rem" : "5rem",
-                          right: size600 ? "20px" : "5px",
-                        }}
-                      />
-                    </Box>
-                  </Badge>
-                </IconButton>
-              </Grid>
+              <Letter animation={hasCartOpen} onClick={handleClickLetter} />
             </>
           ) : (
             <>
@@ -312,10 +122,11 @@ export default function Home() {
                   alignItems: "center",
                   width: "300px",
                   height: "600px",
+                  cursor: `url("https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png") 39 39, auto`,
                 }}
-                className={`flex fill center ${styles.container}`}
+                // className={`flex fill center ${styles.container}`}
               >
-                <Deck />
+                <Deck cards={cards} />
                 <Typography
                   fontWeight={700}
                   sx={{ position: "absolute", top: "700px", color: "white" }}
@@ -327,101 +138,7 @@ export default function Home() {
           )}
         </Grid>
       </Container>
-      <Dialog
-        open={openLetter}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle
-          fontWeight={500}
-          fontSize={32}
-          sx={{ textAlign: "center" }}
-        >
-          Para uma pessoa mais que especial, a pessoa que amo!
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText
-            id="alert-dialog-slide-description"
-            fontSize={24}
-            sx={{ color: "rgba(0,0,0,0.8)" }}
-          >
-            <div className="container">
-              <p
-                className={openLetter ? "typing" : ""}
-                // style={{ textAlign: "justify" }}
-              >
-                Oi amor, tudo bem ? Primeiramente, tenho que adiantar que sou
-                péssimo com palavras (apesar de você já saber disso), sobretudo
-                quando estou falando sobre sentimento, que é um pouco do que eu
-                falarei aqui. Já era de se imaginar que hoje nós não estariamos
-                juntos "presencialmente", essa viagem pegou de surpresa nossos
-                corações, quem imaginaria que estariamos juntos apesar de tudo,
-                seja a distância, idade, diferenças de pensamento, é até
-                engraçado como o racional se torna ínfimo quando o coração bate
-                mais forte por amar com alguém. Eu gosto muito de acreditar no
-                determinismo, ou seja, que tudo que acontece já foi determinado
-                lá no passado. Acredito que nos conhecermos tem um propósito,
-                que nossa conexão instantânea tem um porquê claro, e que em um
-                futuro talvez descubramos essas respostas, mas te digo, os
-                porquês nada importam, o que de fato é relevante nessa vida é
-                simplesmente ser feliz, e é o sentimento que me transborda em só
-                pensar em ti. Sem dúvidas você é uma das pessoas mais especiais
-                que já tive em minha vida, e sou eternamente grato por poder
-                compartilhar um pouco da minha vida com você. Lembro do nosso
-                primeiro encontro naquele bar, do seu olhar penetrante e eu sem
-                jeito e sem saber muito bem o que fazer, mas sabia que eu
-                precisava falar contigo. "Seria muita pretensão minha te chamar
-                para dançar?" foi minha primeira frase dirigida a você, e em
-                seguida veio a retórica positiva, mas sorte a minha! E dai se
-                inicia uma história a mais nas nossas vidas, e que a partir de
-                então, desejo que todas as próximas histórias vocês também
-                esteja inclusa. Parafraseando Carl Sagan, Dada a Vastidão do
-                espaço e na imensidão do tempo, é uma alegria poder compartilhar
-                um planeta e um época com você Welma. <br />
-                <span
-                  style={{
-                    color: theme.palette.primary.main,
-                    fontWeight: 700,
-                  }}
-                >
-                  EU AMO VOCÊ &#10084;
-                </span>
-                <br /> Ass.: Ayrlon
-              </p>
-
-              <div className={openLetter ? "hiders" : ""}>
-                {(function () {
-                  let paragraphs = [];
-                  let count = 0;
-                  for (let i = 0; i < 100; i++) {
-                    count;
-                    paragraphs.push(
-                      <p
-                        style={{
-                          animationDelay: `${i * 2}s`,
-                        }}
-                      >
-                        &nbsp;
-                      </p>
-                    );
-                  }
-                  return paragraphs;
-                })()}
-              </div>
-            </div>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ margin: "0 auto" }}>
-          <Button onClick={handleClose} variant="contained">
-            <Typography textTransform={"capitalize"}>
-              Leu tudinho? Então Clica aqui
-            </Typography>
-          </Button>
-          {/* <Button onClick={handleClose}>Agree</Button> */}
-        </DialogActions>
-      </Dialog>
+      <DialogLetter handleClose={handleClose} openLetter={openLetter} />
     </>
   );
 }
